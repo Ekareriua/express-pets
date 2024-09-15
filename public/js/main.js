@@ -33,3 +33,51 @@ function handleButtonClick(e) {
     }
   })
 }
+
+document.querySelector(".form-overlay").style.display = ""
+
+function openOverlay(element) {
+  document.querySelector(".form-content").dataset.id = element.dataset.id
+  document.querySelector(".form-photo p strong").textContent = element.closest(".pet-card").querySelector(".pet-name").textContent.trim() + "."
+  document.querySelector(".form-photo img").src = element.closest(".pet-card").querySelector(".pet-card-photo img").src
+  document.querySelector(".form-overlay").classList.add("form-overlay--is-visible")
+  document.querySelector(":root").style.overflowY = "hidden"
+}
+
+document.querySelector(".close-form-overlay").addEventListener("click", closeOverlay)
+
+function closeOverlay() {
+  document.querySelector(".form-overlay").classList.remove("form-overlay--is-visible")
+  document.querySelector(":root").style.overflowY = ""
+}
+
+
+document.querySelector(".form-content").addEventListener("submit", async function (event) {
+  event.preventDefault()
+
+  const userValues = {
+    petId: event.target.dataset.id,
+    name: document.querySelector("#name").value,
+    email: document.querySelector("#email").value,
+    secret: document.querySelector("#secret").value,
+    comment: document.querySelector("#comment").value,
+  }
+
+  console.log(userValues)
+
+  await fetch("/submit-contact", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(userValues)
+  })
+
+  document.querySelector(".thank-you").classList.add("thank-you--visible")
+  setTimeout(closeOverlay, 2500)
+  setTimeout(() => {
+    document.querySelector(".thank-you").classList.remove("thank-you--visible")
+    document.querySelector("#name").value = ""
+    document.querySelector("#email").value = ""
+    document.querySelector("#secret").value = ""
+    document.querySelector("#comment").value = ""
+  },2900)
+})
