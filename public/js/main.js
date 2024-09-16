@@ -72,12 +72,12 @@ document.querySelector(".form-content").addEventListener("submit", async functio
   })
 
   document.querySelector(".thank-you").classList.add("thank-you--visible")
-  setTimeout(closeOverlay, 2500)
+  setTimeout(closeOverlay, 1300)
   setTimeout(() => {
     document.querySelector(".thank-you").classList.remove("thank-you--visible")
     document.querySelector("#name").value = ""
     document.querySelector("#email").value = ""
     document.querySelector("#secret").value = ""
     document.querySelector("#comment").value = ""
-  },2900)
+  },1700)
 })

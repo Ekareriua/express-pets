@@ -97,5 +97,17 @@ exports.submitContact = async function(req, res, next) {
 }
 
 exports.viewPetContacts = async (req, res) => {
-  res.render("pet-contacts")
+  if(!ObjectId.isValid(req.params.id)) {
+    console.log("bad id")
+    return res.redirect("/")
+  }
+  const pet = await petsCollection.findOne({_id: new ObjectId(req.params.id)})
+
+  if(!pet) {
+    console.log("pet does not exist")
+    return res.redirect("/")
+  }
+
+  const contacts = await contactsCollection.find({petId: new ObjectId(req.params.id)}).toArray()
+  res.render("pet-contacts", { contacts, pet })
 }

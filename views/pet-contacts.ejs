@@ -15,8 +15,26 @@
 <div class="page-section">
     <div class="page-section-inner">
         <a href="/admin" class="small-link">&laquo; Back to admin dashboard</a>
-        <h1 class="page-section-title mb-big">Contact List</h1>
-        list contacts here
+        <h1 class="page-section-title mb-big">Contacts for <%= pet.name %></h1>
+
+        <% if(contacts.length) { %>
+            <table class="contact-list">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Comment</th>
+                </tr>
+                <% contacts.forEach(contact => { %>
+                    <tr>
+                        <td><%= contact.name %></td>
+                        <td><%= contact.email %></td>
+                        <td><%= contact.comment %></td>
+                    </tr>
+                <% }) %>
+            </table>
+        <% } else { %>
+            <p>This pet has no contacts yet.</p>
+        <% } %>
 
     </div>
 </div>
